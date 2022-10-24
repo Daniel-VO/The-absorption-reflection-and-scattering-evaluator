@@ -1,5 +1,5 @@
 """
-Created 18. March 2022 by Daniel Van Opdenbosch, Technical University of Munich
+Created 24. October 2022 by Daniel Van Opdenbosch, Technical University of Munich
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. It is distributed without any warranty or implied warranty of merchantability or fitness for a particular purpose. See the GNU general public license for more details: <http://www.gnu.org/licenses/>
 """
@@ -17,10 +17,6 @@ from quantities import UncertainQuantity as uq
 
 os.system('mv result.log result.alt')
 sys.stdout=open('result.log','a')
-
-#Funktionen
-def conv(t):
-	return t.replace(',','.')
 
 def Sellmeier(lambdas,A,B1,C1):
 	return numpy.sqrt(A+B1*lambdas/(lambdas-C1))
@@ -68,14 +64,14 @@ alpha_collect=[]
 for i in files:
 	filename=os.path.splitext(i)[0]
 	print(filename)
-	lamb0,Tmeas0=numpy.genfromtxt((conv(t) for t in open(i)),unpack=True,delimiter='\t',skip_header=36,skip_footer=2)
+	lamb0,Tmeas0=numpy.genfromtxt((t.replace(',','.') for t in open(i)),unpack=True,delimiter='\t',skip_header=36,skip_footer=2)
 	Tmeas0=Tmeas0/100
 	args=numpy.where((lamb0>=400)&(lamb0<=900))
 	argsred=numpy.where((lamb0>=400)&(lamb0<=900))[0][::25]
 
 	#Attenuationskoeffizienten berechnen
-	lambref,Ileer=numpy.genfromtxt((conv(t) for t in open('Counts_DMAcLiCl_ohne_Cellulose_c01_000000.txt')),unpack=True,delimiter='\t',skip_header=36,skip_footer=2)
-	lamb_epsilon,Ivoll=numpy.genfromtxt((conv(t) for t in open('Counts_Cellulose_DMAcLiCl_c01_000001.txt')),unpack=True,delimiter='\t',skip_header=36,skip_footer=2)
+	lambref,Ileer=numpy.genfromtxt((t.replace(',','.') for t in open('Counts_DMAcLiCl_ohne_Cellulose_c01_000000.txt')),unpack=True,delimiter='\t',skip_header=36,skip_footer=2)
+	lamb_epsilon,Ivoll=numpy.genfromtxt((t.replace(',','.') for t in open('Counts_Cellulose_DMAcLiCl_c01_000001.txt')),unpack=True,delimiter='\t',skip_header=36,skip_footer=2)
 	cKuevette=3.2e-4
 	dKuevette=1e-2
 	A=numpy.log10(Ileer/Ivoll)
