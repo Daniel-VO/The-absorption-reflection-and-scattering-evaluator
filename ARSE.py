@@ -119,7 +119,7 @@ for i in files:
 	Tmeas=Tmeas0[args]
 	TM(params)
 
-	plt.clf()
+	plt.close('all')
 	plt.plot(lamb,Tmeas,'k')
 	plt.plot(lamb,Tsim)
 	plt.plot(lamb,Tsim-Ssim)
